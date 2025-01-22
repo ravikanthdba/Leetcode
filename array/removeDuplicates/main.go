@@ -18,23 +18,29 @@ func removeDuplicates(nums []int) int {
 		return 2
 	}
 
-	p_pos := 0
-	p := 0
-	q := p + 1
+	q := 0
+	p := 1
+	count := 0
 
 	for p < len(nums) {
 		if nums[q] == nums[p] {
-			p = q
-			q++
+			p++
+			count++
 		} else {
-			p_pos = p
-			for i := q; i < len(nums); i++ {
-				nums[p] = nums[q]
-				p++
+			if q == 0 {
+				q = p - 1
+				nums = nums[q:]
+				
+			} else {
+				var temp []int
+				temp = nums[:q+1]
+				q = p - 1
+				temp = append(temp, nums[q:])
+				nums = temp
 			}
-			p = p_pos
 		}
 	}
+	
 
 	return len(nums)
 }
